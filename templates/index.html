@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home-Page</title>
-</head>
-<body>
-<h1>Welcome to the homepage</h1>
-</body>
-</html>
+{% extends "authentication/base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Classroom Home
+{% endblock %}
+
+
+{% block main %}
+    <h1>Welcome to the home page</h1>
+{% endblock %}

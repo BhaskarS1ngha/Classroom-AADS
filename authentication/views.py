@@ -6,12 +6,17 @@ from .forms import SignUpForm
 # Create your views here.
 
 
+def home(request):
+    return render(request=request, template_name="index.html")
+
+
 def register(request):
     if request.method=="POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("/")
+            user = form.save()
+            login(request=request,user=user)
+            return redirect("home")
     else:
         form = SignUpForm
         return render(request=request,
@@ -24,9 +29,9 @@ def login_view(request):
 
 
 def logout_view(request):
-    pass
+    logout(request)
+    return redirect('home')
 
 
-def home(request):
-    return render(request=request, template_name="index.html")
+
 

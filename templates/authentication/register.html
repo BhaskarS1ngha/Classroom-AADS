@@ -1,0 +1,51 @@
+{% extends "authentication/base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <h1>Register</h1><br>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <form method="POST">
+            <div class="form-group">
+            {% csrf_token %}
+                {{ form|crispy }}
+
+{#              <div class="form-group col-md-6 mb-0">#}
+{#                <label for="InputEmail1">{{form.username.label_tag }}</label>#}
+{#                {{ form.username }}#}
+{#                  <small id="emailHelp" class="form-text text-muted">{{ form.username.help_text }}</small>#}
+{#              </div>#}
+{##}
+{#               <div class="form-row">#}
+{#                   <div class="form-group col-md-6 mb-0">#}
+{#                    <label for="fname">{{form.first_name.label_tag }}</label>#}
+{#                        {{ form.first_name }}#}
+{#                   </div>#}
+{#                   <div class="form-group col-md-6 mb-0">#}
+{#                    <label for="lname">{{form.last_name.label_tag }}</label>#}
+{#                        {{ form.last_name }}#}
+{#                    </div>#}
+{#               </div>#}
+{##}
+{#               <div class="form-row">#}
+{#                   <div class="form-group col-md-6 mb-0">#}
+{#                    <label for="password1">{{form.password1.label_tag }}</label>#}
+{#                        {{ form.password1 }}#}
+{#                   </div>#}
+{#                   <div class="form-group col-md-6 mb-0">#}
+{#                    <label for="password1">{{form.password2.label_tag }}</label>#}
+{#                        {{ form.password2 }}#}
+{#                    </div>#}
+{#               </div>#}
+
+
+            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+
+        If you already have an account <a href="/login" target="blank"><strong>login</strong></a> instead.
+    </div>
+{% endblock %}

@@ -1,32 +1,75 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} {% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  </head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+</head>
 
 
-  <body>
-  <nav>
-       <ul id="nav-mobile" class="right hide-on-small-only">
+<body>
+<nav>
+    <ul id="nav-mobile" class="right hide-on-small-only">
         <li><a href="/">Home</a></li>
-          {% if user.is_authenticated %}
-              <li><a href="/auth/logout">Logout</a></li>
-          {% else %}
-           <li><a href="/auth/login">Login</a></li>
-           <li><a href="/auth/register">Sign Up</a></li>
-          {% endif %}
-      </ul>
-  </nav>
+        {% if user.is_authenticated %}
+            <li><a href="/auth/logout">Logout</a></li>
+        {% else %}
+            <li><a href="/auth/login">Login</a></li>
+            <li><a href="/auth/register">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</nav>
 
+{% if messages %}
+    <div class="toast-container top-0 end-0">
+        {% for message in messages %}
+            <div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="toast align-items-center text-white text-center bg-primary border-0 p-1"
+                             id="EpicToast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ message }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
-    <div class="container">
-        {% block main %}
-        {% endblock %}
+            </div>
+        {% endfor %}
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  </body>
+    </div>
+
+{% endif %}
+
+<div class="container">
+    {% block main %}
+    {% endblock %}
+</div>
+
+</body>
 </html>
+
+{% if messages %}
+    <script>
+        var option =
+            {
+                animation: true,
+                delay: 2000
+            };
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+
+            return new bootstrap.Toast(toastEl)
+        })
+        toastList.forEach(toast => toast.show())
+
+    </script>
+{% endif %}

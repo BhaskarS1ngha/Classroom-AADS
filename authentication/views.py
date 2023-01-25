@@ -24,8 +24,28 @@ def register(request):
                       context={"form": form})
 
 
-def login_view(request):
+# def login_view(request):
+#     pass
+
+
+class UserAuthenticationForm:
     pass
+
+
+def login_view(request):
+    if request.method=="POST":
+        form=UserAuthenticationForm(request=request,data=request.POST)
+        if form.is_valid():
+            user_name=form.cleaned_data.get('username')
+            password=form.cleaned_data.get('password')
+            user=authenticate(username=user_name,password=password)
+            if user!=None:
+                login(request,user)
+                return redirect('home')
+        else:
+            return render(request,'authentication/login.html',{'form':form})
+    form=UserAuthenticationForm()
+    return render(request,'authentication/login.html',{'form':form})
 
 
 def logout_view(request):

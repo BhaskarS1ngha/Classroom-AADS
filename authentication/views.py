@@ -8,8 +8,6 @@ from .forms import SignUpForm
 
 
 def home(request):
-    messages.success(request, "Welcome")
-    messages.success(request,'homepage')
     return render(request=request, template_name="index.html")
 
 
@@ -19,17 +17,21 @@ def register(request):
         if form.is_valid():
             user = form.save()
             if user is not None:
+                username = form.cleaned_data.get('username')
                 login(request=request,user=user)
+                messages.success(request, f"User: {username} Created")
+                messages.info(request,f"You are now logged in as {username}")
                 return redirect("home")
             else:
-                messages.error(request, "Username already exists")
+                messages.error(request, "Error creating user")
                 return render(request=request, template_name="authentication/register.html", context={"form": form})
         else:
-            messages.error(request, "Invalid Details, please check your input")
+            for er in form.errors:
+                errText = form.errors[er].as_text()
+                messages.error(request, f"{errText[1:]}")
             return render(request=request, template_name="authentication/register.html", context={"form": form})
 
     form = SignUpForm
-    messages.success(request, "Invalid Details, please check your input")
     return render(request=request, template_name="authentication/register.html", context={"form": form})
 
 

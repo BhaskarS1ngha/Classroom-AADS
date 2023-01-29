@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
 from .forms import SignUpForm
 
 # Create your views here.
@@ -10,18 +11,37 @@ def home(request):
     return render(request=request, template_name="index.html")
 
 
+# def register(request):
+#     if request.method=="POST":
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request=request,user=user)
+#             return redirect("home")
+#     else:
+#         form = SignUpForm
+#         return render(request=request,
+#                       template_name="authentication/register.html",
+#                       context={"form": form})
+
 def register(request):
     if request.method=="POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request=request,user=user)
-            return redirect("home")
-    else:
-        form = SignUpForm
-        return render(request=request,
-                      template_name="authentication/register.html",
-                      context={"form": form})
+            if user is not None:
+                login(request=request,user=user)
+                return redirect("home")
+            else:
+                messages.error(request, "Username already exists")
+                return render(request=request, template_name="authentication/register.html", context={"form": form})
+        else:
+            messages.error(request, "Invalid Details, please check your input")
+            return render(request=request, template_name="authentication/register.html", context={"form": form})
+
+    form = SignUpForm
+    messages.success(request, "Invalid Details, please check your input")
+    return render(request=request, template_name="authentication/register.html", context={"form": form})
 
 
 # def login_view(request):

@@ -22,5 +22,6 @@ urlpatterns = [
     path("",authentication.views.home,name='home'),
     path("admin/", admin.site.urls),
     path("auth/", include("authentication.urls")),
-
+    path("api/",include("api.urls")),
+    path("dashboard",include("dashboard.urls")),
 ]

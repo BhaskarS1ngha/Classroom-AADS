@@ -1,7 +1,10 @@
+import json
+
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.http import JsonResponse
 from .forms import SignUpForm, LoginForm
 
 # Create your views here.
@@ -59,6 +62,16 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+
+def get_classrooms(request):
+    data = {
+        'Name' : 'AOS',
+        'Instructor':  'Prof 1',
+        'Student_count': '80'
+    }
+    dump = json.dumps(data)
+    return HttpResponse(dump,content_type='application/json')
 
 
 

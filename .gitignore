@@ -1,7 +1,5 @@
 .idea
 /db.sqlite3
 /venv/
-/authentication/migrations/
-/api/migrations/
-/dashboard/migrations/
+
 

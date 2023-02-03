@@ -7,10 +7,11 @@ class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
     email = forms.EmailField(max_length=254, required=True)
+    is_faculty = forms.BooleanField(required=True)
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', ]
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'is_faculty']
 
         help_texts = {
             'username': 'Students should use their Roll number',
@@ -21,6 +22,7 @@ class SignUpForm(UserCreationForm):
         self.fields['username'].widget.attrs.update({'placeholder': 'Enrollment Number'})
         for f in self.fields:
             self.fields[f].widget.attrs.update({'class': 'form-control'})
+        self.fields['is_faculty'].widget.attrs.update({'class': ''})
 
 
 class LoginForm(AuthenticationForm):

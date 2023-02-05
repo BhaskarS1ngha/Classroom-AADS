@@ -1,82 +1,121 @@
 {% extends "authentication/base.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block title %}
     Register
 {% endblock %}
-<link href="/static/sign-in.css" rel="stylesheet">
-<link href="/static/register.css" rel="stylesheet">
-{% block main %}
+
+{%  block main %}
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="/static/sign-in.css" rel="stylesheet">
+
+
 <div class="text-center">
-    <section class="vh-100 bg-image">
-
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-
-{#<div class="text-center">#}
 <main class="form-signin w-100 m-auto">
-              <form method="POST">
-                {% csrf_token %}
-                  <img class="mb-4" src="/static/images/tulogo.png" alt="" width="72" height="72">
-                    <h1 class="h3 mb-3 fw-normal">Create an account</h1>
+  <form method="POST">
+{% csrf_token %}
+    <img class="mb-4" src="/static/images/tulogo.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 fw-normal">Create an account</h1>
 
-                  <div class="form-floating">
+    <div class="form-floating">
+        {{ form.username }}
+      <label for="{{ form.username.id_for_label }}">Enrolment No *</label>
+    </div>
 
-                     {{ form.username }}
-                     <label for="{{ form.username.id_for_label }}">Enrolment Number</label>
-                 </div>
+    <div class="form-floating">
+        {{ form.first_name }}
+      <label for="{{ form.first_name.id_for_label }}">Name</label>
+    </div>
 
-                 <div class="form-floating">
-                     {{ form.first_name }}
-                    <label for="{{ form.first_name.id_for_label }}">First Name</label>
-                 </div>
+      <div class="form-floating">
+        {{ form.last_name_name }}
+      <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+     </div>
 
-                  <div class="form-floating">
-                     {{ form.last_name }}
-                     <label for="{{ form.last_name.id_for_label }}">Last Name</label>
-                  </div>
+      <div class="form-floating">
+        {{ form.email }}
+      <label for="{{ form.email.id_for_label }}">Email Id *</label>
+      </div>
 
-                  <div class="form-floating">
-                     {{ form.email }}
-                    <label for="{{ form.email.id_for_label }}">Email Id</label>
-                  </div>
+      <div class="form-floating">
+        {{ form.password1 }}
+      <label for="{{ form.password1.id_for_label }}">Password</label>
+      </div>
 
-                  <div class="form-floating">
-                    {{ form.password1 }}
-                     <label for="{{ form.password1.id_for_label }}">Password</label>
-                  </div>
+      <div class="form-floating">
+        {{ form.password2 }}
+      <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+      </div>
 
-                  <div class="form-floating">
-                     {{ form.password2 }}
-                     <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
-                  </div>
-
-                <div>
-                  <div class="form-group col-md-6 mb-0 d-flex justify-content-center">
-                      <button type="submit"
-                              class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register
-                      </button>
-                  </div>
-                </div>
-
-                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
                     class="fw-bold text-body"><u>Login here</u></a></p>
-
-              </form>
+                    <p class="mt-5 mb-3 text-muted">&copy; 2022–2024</p>
+  </form>
 </main>
 </div>
 
-
-          </div>
-        </div>
-      </div>
+{%  endblock %}
 
 
-</section>
-</div>
 
 
-{% endblock %}
+
+
+
+

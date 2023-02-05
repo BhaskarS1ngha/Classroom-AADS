@@ -1,0 +1,39 @@
+{% extends "authentication/base.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <h1>Home</h1>
+    <div class="row">
+        {% for c in classrooms %}
+{#            <div class="card">#}
+{#                <img src="..." class="card-img-top" alt="...">#}
+{#                <div class="card-body">#}
+{#                <h5 class="card-title">{{ c.classroom.title }}</h5>#}
+{#                <p class="card-text">{{ c.classroom.description }}</p>#}
+{#                <p class="card-text">{{ c.classroom.join_code }}</p>#}
+{#                <a href="/classroom/{{ c.classroom.join_code }}/" class="btn btn-primary">Go to classroom</a>#}
+{#                </div>#}
+{#            </div>#}
+
+
+
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">{{ c.classroom.title }}</h5>
+                <p class="card-text">{{ c.classroom.description }}</p>
+                <p class="card-text">{{ c.classroom.join_code }}</p>
+                <a href="/classroom/{{ c.classroom.join_code }}/" class="btn btn-primary">Go to Classroom</a>
+            </div>
+        </div>
+    </div>
+
+
+
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,8 +1,13 @@
+import json
+
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.http import JsonResponse
 from .forms import SignUpForm, LoginForm
+from django.contrib.auth.models import Group
+from dashboard.models import Classroom, StudentClassroom, TeacherClassroom
 
 # Create your views here.
 
@@ -21,7 +26,7 @@ def register(request):
                 login(request=request,user=user)
                 messages.success(request, f"User: {username} Created")
                 messages.info(request,f"You are now logged in as {username}")
-                return redirect("home")
+                return redirect("dashboard:home")
             else:
                 messages.error(request, "Error creating user")
                 return render(request=request, template_name="authentication/register.html", context={"form": form})
@@ -48,7 +53,7 @@ def login_view(request):
             if user is not None:
                 login(request,user)
                 messages.success(request, "Logged in!")
-                return redirect('home')
+                return redirect('dashboard:home')
         else:
             messages.error(request,"Please try again")
             return render(request,'authentication/login.html',{'form':form})
@@ -58,7 +63,17 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('home')
+    return redirect('dashboard:home')
+
+
+def get_classrooms(request):
+    data = {
+        'Name' : 'AOS',
+        'Instructor':  'Prof 1',
+        'Student_count': '80'
+    }
+    dump = json.dumps(data)
+    return HttpResponse(dump,content_type='application/json')
 
 
 

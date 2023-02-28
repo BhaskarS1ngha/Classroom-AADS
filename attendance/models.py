@@ -15,6 +15,7 @@ class AttendanceClass(models.Model):
 
 
 
+
 class Attendance(models.Model):
     course = models.ForeignKey(Classroom,on_delete=models.CASCADE)
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -35,26 +36,21 @@ class AttendanceTotal(models.Model):
     class Meta:
         unique_together = (('student', 'course'),)
 
+
     @property
     def att_class(self):
-        stud = User.objects.get(name=self.student.name)
-        cr = Classroom.objects.get(title=self.course.title)
-        att_class = Attendance.objects.filter(course=cr, student=stud, status='True').count()
+        att_class = Attendance.objects.filter(course=self.course, student=self.student, status='True').count()
         return att_class
 
     @property
     def total_class(self):
-        stud = User.objects.get(name=self.student.name)
-        cr = Classroom.objects.get(title=self.course.title)
-        total_class = Attendance.objects.filter(course=cr, student=stud).count()
+        total_class = Attendance.objects.filter(course=self.course, student=self.student).count()
         return total_class
 
     @property
     def attendance(self):
-        stud = User.objects.get(name=self.student.name)
-        cr = Classroom.objects.get(title=self.course.title)
-        total_class = Attendance.objects.filter(course=cr, student=stud).count()
-        att_class = Attendance.objects.filter(course=cr, student=stud, status='True').count()
+        total_class = Attendance.objects.filter(course=self.course, student=self.student).count()
+        att_class = Attendance.objects.filter(course=self.course, student=self.student, status='True').count()
         if total_class == 0:
             attendance = 0
         else:
@@ -71,6 +67,8 @@ class AttendanceTotal(models.Model):
         if cta < 0:
             return 0
         return cta
+
+
 
 
 class AttendanceRange(models.Model):

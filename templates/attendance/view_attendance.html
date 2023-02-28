@@ -1,0 +1,40 @@
+{% extends "authentication/base.html" %}
+
+{% block title %}
+    {{ student.username }} Attendance
+{% endblock %}
+
+
+{% block main %}
+    <h1>Detailed Attendance Records of {{ student.username }}</h1>
+    <h3>Course: {{ classroom.title }}</h3>
+    <h3>Instructor: {{ classroom.owner.username }}</h3>
+    <h4>Attendance Percentage: {{ attendance_total.attendance }} %</h4>
+
+
+     <div>
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Attendance</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for at in attendance %}
+        <tr>
+      <th scope="row">{{ at.att_class.date}}</th>
+      <td>{% if at.status == True %}
+          Present
+      {% elif at.status == False %}
+        Absent
+      {% endif %}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+    </div>
+
+{% endblock %}

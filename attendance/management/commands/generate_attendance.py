@@ -11,7 +11,7 @@ nUsers = 10
 numdays = 30
 
 class Command(BaseCommand):
-    help = f'Creates {nUsers} users and assigns them to a class'
+    help = f'generates attendance for all students in a class with join code <Class_code> for the next {numdays} days'
 
     def add_arguments(self, parser):
         parser.add_argument('Class_code', type=str, help='Class code to add users to')
@@ -36,24 +36,11 @@ class Command(BaseCommand):
                 for student in students:
                     attendance_obg = Attendance.objects.create(course=classroom, student=student.user,
                                                             att_class=attendance_class)
-                    status = random.randint(0,1)
+                    status = random.randint(1,9999)%2
                     if(status==1):
                         attendance_obg.status = True
                     attendance_obg.save()
+            
 
 
-        for i in range(0,nUsers):
-            userName = f'Student {random.randint(100,999)}'
-            password = "test_password"
-            # creaete a new user and add to Student group
-            new_user = User.objects.create_user(username=userName, password=password)
-            group, created = Group.objects.get_or_create(name='Student')
-            group.user_set.add(new_user)
-            # save the new user
-            new_user.save()
-
-            # Create a new student classroom object
-            student_classroom = StudentClassroom.objects.create(user=new_user, classroom=classroom)
-            student_classroom.save()
-
-        print(f'Added {nUsers} users')
+        print(f'Attendance generated for {classroom} for the next {numdays} days')

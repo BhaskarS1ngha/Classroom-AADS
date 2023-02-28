@@ -7,16 +7,16 @@
 {% endblock %}
 
 {% block main %}
-    {% if students.all %}
-        <form action="{% url 'attendance:confirm_new' students.0.classroom.join_code %}" method="post">
+    {% if attendance.all %}
+        <form action="{% url 'attendance:confirm' attendance_class.id %}" method="post">
         {% csrf_token %}
 {#        field to set date of attendance#}
         <div class="form-group">
             <label for="date">Date</label>
-            <input type="date" class="form-control" id="date" name="date" required>
+            <input type="date" class="form-control" id="date" name="date" value="{{ attendance_class.date }}" required>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable">
+            <table class="table table-bordered" id="dataTable"">
               <thead>
                 <tr>
                     <th>Student name</th>
@@ -24,14 +24,14 @@
                 </tr>
               </thead>
                 <tbody>
-                {% for s in students %}
+                {% for s in attendance %}
                     <tr>
-                    <td>{{ s.user.username }}</td>
+                    <td>{{ s.student.username }}</td>
                     <td>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
 
                                 <label class="btn btn-outline-success active">
-                                    <input type="checkbox" name="{{ s.user.id }}" id="option1" autocomplete="off" value="present"> Present
+                                    <input type="checkbox" name="{{ s.student.id }}" id="option1" autocomplete="off" value="present"> Present
                                 </label>
                         </div>
                     </td>

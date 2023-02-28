@@ -1,32 +1,32 @@
 {% extends "authentication/base.html" %}
 
 {% block title %}
-    {{ classroom.title }} Home
+    {{ classroom.title }}
 {% endblock %}
 
 {% block main %}
     <h1>{{ classroom.title }}</h1>
     <p>{{ classroom.description }}</p>
-    <a class="button" href="{% url 'attendance:create_attendance' classroom.join_code %}">Record Attendance</a>
+    <a class="button" href="{% url 'attendance:new_attendance' classroom.join_code %}">Record Attendance</a>
 
     <div>
     <h2>Students:</h2>
     <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Roll Number</th>
+      <th scope="col" >Roll Number</th>
       <th scope="col"># Present</th>
       <th scope="col"># Classes</th>
       <th scope="col">Percentage</th>
     </tr>
   </thead>
   <tbody>
-    {% for student in students %}
+    {% for at in attendance %}
         <tr>
-      <th scope="row">{{ student.user.username }}</th>
-      <td>75</td>
-      <td>100</td>
-      <td>75 %</td>
+      <th scope="row" ><a href="{% url 'attendance:view_attendance' classroom.join_code at.student_id %}">{{ at.student.username }}</a></th>
+      <td>{{ at.att_class }}</td>
+      <td>{{ at.total_class }}</td>
+      <td>{{ at.attendance }}</td>
     </tr>
     {% endfor %}
 

@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 print(f'User {userName} already exists, regenerating')
                 userName = f'CSE220{random.randint(10,99)}'
                 k+=1
-                if k>10:
+                if k>90:
                     print("Too many users with same name, aborting")
                     return
 

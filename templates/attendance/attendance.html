@@ -1,0 +1,49 @@
+{% extends "authentication/base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+    Record attendance
+{% endblock %}
+
+{% block main %}
+    {% if attendance.all %}
+        <form action="{% url 'attendance:confirm' attendance_class.id %}" method="post">
+        {% csrf_token %}
+{#        field to set date of attendance#}
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{ attendance_class.date }}" required>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable"">
+              <thead>
+                <tr>
+                    <th>Student name</th>
+                    <th></th>
+                </tr>
+              </thead>
+                <tbody>
+                {% for s in attendance %}
+                    <tr>
+                    <td>{{ s.student.username }}</td>
+                    <td>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                                <label class="btn btn-outline-success active">
+                                    <input type="checkbox" name="{{ s.student.id }}" id="option1" autocomplete="off" value="present"> Present
+                                </label>
+                        </div>
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+          </div>
+         <input class="btn btn-success" type="submit" value="Submit">
+        </form>
+
+    {% else %}
+        <p>No students in Class</p>
+    {% endif %}
+{% endblock %}

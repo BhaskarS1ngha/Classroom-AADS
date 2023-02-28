@@ -5,6 +5,7 @@ app_name="dashboard"
 
 urlpatterns = [
     path("", views.view_all_classrooms,name='home'),
-    path("create", views.create_classroom),
-    path("join", views.join_classroom),
+    path("create", views.create_classroom,name="create_classroom"),
+    path("join", views.join_classroom,name="join_classroom"),
+    path("class/<str:code>/", views.view_classroom, name="classroom"),
 ]

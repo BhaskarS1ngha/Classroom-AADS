@@ -23,8 +23,13 @@ def register(request):
             user = form.save()
             if user is not None:
                 username = form.cleaned_data.get('username')
+                if form.cleaned_data.get('is_faculty'):
+                    group,created = Group.objects.get_or_create(name='Faculty')
+                else:
+                    group, created = Group.objects.get_or_create(name='Student')
+                group.user_set.add(user)
                 login(request=request,user=user)
-                messages.success(request, f"User: {username} Created")
+                messages.success(request, f"User: {username} in group {group.name} Created")
                 messages.info(request,f"You are now logged in as {username}")
                 return redirect("dashboard:home")
             else:

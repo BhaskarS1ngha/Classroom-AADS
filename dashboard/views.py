@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import Classroom, StudentClassroom, TeacherClassroom
 # from helpers import random_str
 from itertools import chain
@@ -31,6 +31,9 @@ def random_str(digit=7):
 
 @login_required(login_url='/auth/login')
 def create_classroom(request):
+    # check if user is a faculty
+    if not request.user.groups.filter(name="Faculty").exists():
+        return HttpResponse("You are not a faculty")
     if request.method == "POST":
         title = request.POST["title"]
         description = request.POST["description"]
@@ -63,3 +66,13 @@ def join_classroom(request):
 
     else:
         return render(request, "dashboard/join-classroom.html")
+
+
+@login_required(login_url='/auth/login')
+def view_classroom(request, code):
+    classroom = get_object_or_404(Classroom, join_code=code)
+    students = StudentClassroom.objects.filter(classroom=classroom)
+    return render(request, "dashboard/class.html", {
+        "classroom": classroom,
+        "students": students,
+    })

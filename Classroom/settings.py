@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "authentication",
+    "attendance",
     "api",
     "dashboard",
     "crispy_forms",
